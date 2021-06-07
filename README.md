@@ -1,8 +1,10 @@
 # TWINDEX Stats
 
-![Web capture_6-6-2021_03022_localhost](https://user-images.githubusercontent.com/28344318/120900653-2da6d380-c660-11eb-8bf8-0a62aa021b56.jpeg)
+![TWINDEX Stats Screenshot](https://user-images.githubusercontent.com/28344318/121059565-cddd3380-c7eb-11eb-863e-37ff6ab11ebb.jpeg)
 
 [TWINDEX Stats](https://github.com/ice5050/twindex-stats) but made in React!
+
+Open TWINDEX Stats - [phwt.github.io/twindex-stats](https://phwt.github.io/twindex-stats/)
 
 ---
 
