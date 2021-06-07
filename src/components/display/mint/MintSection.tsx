@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Card, Row, Col, Spinner } from "react-bootstrap";
 import MintCard from "./MintCard";
 import { getMintPositions, MintPosition } from "../../../modules/ethers/Loan";
-import { getAddressInQueryString } from "../../../modules/ethers/Utils";
 import IconTooltip from "../../common/IconTooltip";
 import { useWallet } from "../../../modules/contexts/WalletContext";
 

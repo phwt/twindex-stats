@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   Container,
   Nav,
@@ -7,26 +7,19 @@ import {
   Button,
   InputGroup,
 } from "react-bootstrap";
-import { getAddressInQueryString } from "../../modules/ethers/Utils";
+import { useWallet } from "../../modules/contexts/WalletContext";
 
 const AddressForm = () => {
-  const [address, setAddress] = useState(getAddressInQueryString() ?? "");
+  const { address, setAddress, connectWallet } = useWallet();
+  const [localAddress, setLocalAddress] = useState("");
 
-  const handleSearch = useCallback(() => {
-    window.location.href = `?address=${address}`;
+  useEffect(() => {
+    if (address) setLocalAddress(address);
   }, [address]);
 
-  const handleWalletConnect = useCallback(async () => {
-    if (typeof (window as any).ethereum !== "undefined") {
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const account = accounts[0];
-      window.location.href = `?address=${account}`;
-    } else {
-      alert("MetaMask is not installed!");
-    }
-  }, []);
+  const handleSearch = useCallback(() => {
+    setAddress(localAddress);
+  }, [localAddress]);
 
   return (
     <Form inline>
@@ -34,9 +27,9 @@ const AddressForm = () => {
         <Form.Control
           placeholder="Wallet Address"
           name="address"
-          value={address}
+          value={localAddress}
           onChange={(e) => {
-            setAddress(e.target.value);
+            setLocalAddress(e.target.value);
           }}
           aria-label="Wallet Address"
           size="sm"
@@ -59,7 +52,7 @@ const AddressForm = () => {
         size="sm"
         className="ml-2"
         type="button"
-        onClick={handleWalletConnect}
+        onClick={connectWallet}
       >
         Connect to a wallet
       </Button>

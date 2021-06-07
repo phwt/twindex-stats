@@ -70,12 +70,3 @@ export const objectFlip = (obj: { [key: string]: string }) => {
   });
   return ret;
 };
-
-/**
- * @deprecated
- * Use address provided by WalletContext instead
- */
-export const getAddressInQueryString = () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get("address");
-};
