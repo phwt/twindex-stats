@@ -4,17 +4,17 @@ import MintCard from "./MintCard";
 import { getMintPositions, MintPosition } from "../../../modules/ethers/Loan";
 import { getAddressInQueryString } from "../../../modules/ethers/Utils";
 import IconTooltip from "../../common/IconTooltip";
+import { useWallet } from "../../../modules/contexts/WalletContext";
 
 const MintSection = () => {
-  const [positions, setPositions] = useState<MintPosition[] | undefined>([]);
+  const [positions, setPositions] = useState<MintPosition[]>([]);
+  const { address } = useWallet();
 
   useEffect(() => {
     (async () => {
-      const address = getAddressInQueryString();
       if (address) setPositions(await getMintPositions(address));
-      else setPositions(undefined);
     })();
-  }, []);
+  }, [address]);
 
   return (
     <Card
@@ -53,7 +53,7 @@ const MintSection = () => {
           </Col>
         </Row>
 
-        {positions !== undefined ? (
+        {address !== "" ? (
           <>
             {!positions.length && (
               <div className="text-center w-100 mt-5 mb-4">
@@ -72,7 +72,7 @@ const MintSection = () => {
           </>
         ) : (
           <div className="text-center text-muted w-100 mt-5 mb-4">
-            No Wallet Connected{" "}
+            No Wallet Connected
           </div>
         )}
       </Card.Body>

@@ -4,9 +4,9 @@ import {
   getLockedTWINAmount,
   getUnlockDate,
 } from "../../modules/ethers/LockedTwin";
-import { getAddressInQueryString } from "../../modules/ethers/Utils";
 import ReactCountdown, { CountdownTimeDelta } from "react-countdown";
 import IconTooltip from "../common/IconTooltip";
+import { useWallet } from "../../modules/contexts/WalletContext";
 
 const UnitRender = ({
   value,
@@ -69,18 +69,18 @@ const Countdown = () => {
     amount: string;
     valueInUsd: string;
   }>({
-    amount: "0.00",
-    valueInUsd: "$0.00",
+    amount: "----",
+    valueInUsd: "$---",
   });
   const [unlockDate, setUnlockDate] = useState(0);
+  const { address } = useWallet();
 
   useEffect(() => {
     (async () => {
-      const address = getAddressInQueryString();
       if (address) setLocked(await getLockedTWINAmount(address));
       setUnlockDate(await getUnlockDate());
     })();
-  }, []);
+  }, [address]);
 
   return (
     <Card className="h-100">
