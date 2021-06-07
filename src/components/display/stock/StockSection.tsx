@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Row, Col, Spinner } from 'react-bootstrap'
-import { loadStocksPrice, StockPrice } from '../modules/Stock'
+import { loadStocksPrice, StockPrice } from '../../../modules/Stock'
 import StockCard from './StockCard'
 
 const StockTable = () => {

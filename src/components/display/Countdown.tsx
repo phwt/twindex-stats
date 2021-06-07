@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
-import { getLockedTWINAmount, getUnlockDate } from '../modules/LockedTwin'
-import { getAddressInQueryString } from '../modules/Utils'
+import { getLockedTWINAmount, getUnlockDate } from '../../modules/LockedTwin'
+import { getAddressInQueryString } from '../../modules/Utils'
 import ReactCountdown, { CountdownTimeDelta } from 'react-countdown'
-import IconTooltip from './IconTooltip'
+import IconTooltip from '../common/IconTooltip'
 
 const UnitRender = ({ value, unit }: { value: number | string; unit: string }) => {
   return (

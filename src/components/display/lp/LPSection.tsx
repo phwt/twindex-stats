@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Card, Row, Col, Spinner } from 'react-bootstrap'
-import { getLPs, LPPrice } from '../modules/LiquidityPool'
-import { getAddressInQueryString } from '../modules/Utils'
+import { getLPs, LPPrice } from '../../../modules/LiquidityPool'
+import { getAddressInQueryString } from '../../../modules/Utils'
 import LPCard from './LPCard'
 import LPTotalCard from './LPTotalCard'
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Card, Row, Col, Spinner } from 'react-bootstrap'
 import MintCard from './MintCard'
-import { getMintPositions, MintPosition } from '../modules/Loan'
-import { getAddressInQueryString } from '../modules/Utils'
-import IconTooltip from './IconTooltip'
+import { getMintPositions, MintPosition } from '../../../modules/Loan'
+import { getAddressInQueryString } from '../../../modules/Utils'
+import IconTooltip from '../../common/IconTooltip'
 
 const MintSection = () => {
   const [positions, setPositions] = useState<MintPosition[] | undefined>([])

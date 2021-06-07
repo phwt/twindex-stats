@@ -1,5 +1,5 @@
 import { Card, Row, Col } from 'react-bootstrap'
-import { StockPrice } from '../modules/Stock'
+import { StockPrice } from '../../../modules/Stock'
 
 interface Props {
   price: StockPrice

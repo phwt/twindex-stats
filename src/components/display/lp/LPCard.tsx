@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { Card, Row, Col } from 'react-bootstrap'
-import { LPPrice } from '../modules/LiquidityPool'
+import { LPPrice } from '../../../modules/LiquidityPool'
 
 interface Props {
   lp: LPPrice

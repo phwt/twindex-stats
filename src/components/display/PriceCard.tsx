@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react'
 import { Card, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import IconTooltip from '../components/IconTooltip'
+import IconTooltip from '../common/IconTooltip'
 
 interface Props {
   symbol: string
