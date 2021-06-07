@@ -1,12 +1,14 @@
-import React, { useMemo } from 'react'
-import { Card, Row, Col } from 'react-bootstrap'
+import React, { useMemo, useCallback } from 'react'
+import { Card, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import IconTooltip from '../components/IconTooltip'
 
 interface Props {
   symbol: string
+  address: string
   price: string
 }
 
-const PriceCard = ({ symbol, price }: Props) => {
+const PriceCard = ({ symbol, address, price }: Props) => {
   const symbolIcon = useMemo(() => {
     switch (symbol) {
       case 'TWIN':
@@ -20,6 +22,46 @@ const PriceCard = ({ symbol, price }: Props) => {
     if (price === '') return '$---'
     return price
   }, [price])
+
+  const addToken = useCallback(
+    async (e) => {
+      e.preventDefault()
+
+      // @ts-ignore
+      const wasAdded = await ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address,
+            symbol,
+            decimals: 18,
+            image: 'https://phwt.github.io' + symbolIcon, // TODO: Get deployment path from package.js
+          },
+        },
+      })
+
+      if (!wasAdded) alert('Add Token Error!')
+    },
+    [address, symbolIcon, symbol]
+  )
+
+  const bscscanHref = useMemo(() => {
+    return `https://bscscan.com/token/${address}`
+  }, [address])
+
+  const symbolDisplay = (
+    <>
+      <OverlayTrigger placement="top" overlay={<Tooltip id={`tooltip-${symbol}`}>View {symbol} on BscScan </Tooltip>}>
+        <a href={bscscanHref} target="_blank">
+          <>{symbol}</>
+        </a>
+      </OverlayTrigger>
+      <a href="#" className="ml-2" onClick={addToken}>
+        <IconTooltip icon="plus-circle" text={`Add ${symbol} to MetaMask`} />
+      </a>
+    </>
+  )
 
   return (
     <Card className="h-100">
@@ -42,10 +84,9 @@ const PriceCard = ({ symbol, price }: Props) => {
                   className="m-0"
                   style={{
                     fontWeight: 300,
-                    opacity: 0.5,
                   }}
                 >
-                  {symbol}
+                  {symbolDisplay}
                 </h6>
                 <h2 className="m-0">{priceDisplay}</h2>
               </div>
@@ -57,10 +98,9 @@ const PriceCard = ({ symbol, price }: Props) => {
                   className="m-0 mt-3"
                   style={{
                     fontWeight: 300,
-                    opacity: 0.5,
                   }}
                 >
-                  {symbol}
+                  {symbolDisplay}
                 </h6>
                 <h2 className="m-0">{priceDisplay}</h2>
               </div>

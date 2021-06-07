@@ -3,7 +3,7 @@ import { Card, Row, Col, Spinner } from 'react-bootstrap'
 import MintCard from './MintCard'
 import { getMintPositions, MintPosition } from '../modules/Loan'
 import { getAddressInQueryString } from '../modules/Utils'
-import InfoTooltip from './InfoTooltip'
+import IconTooltip from './IconTooltip'
 
 const MintSection = () => {
   const [positions, setPositions] = useState<MintPosition[] | undefined>([])
@@ -28,7 +28,7 @@ const MintSection = () => {
           Mint Positions
           <small className="d-inline d-lg-none">
             &nbsp;
-            <InfoTooltip text="Your position could be liquidated if the health reaches 0%" />
+            <IconTooltip icon="info-circle" text="Your position could be liquidated if the health reaches 0%" />
           </small>
         </h4>
 
@@ -39,7 +39,7 @@ const MintSection = () => {
           </Col>
           <Col className="d-flex align-items-center justify-content-center" style={{ fontWeight: 300 }} md={7}>
             Health&nbsp;
-            <InfoTooltip text="Your position could be liquidated if the health reaches 0%" />
+            <IconTooltip icon="info-circle" text="Your position could be liquidated if the health reaches 0%" />
           </Col>
         </Row>
 
