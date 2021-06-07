@@ -72,6 +72,12 @@ const Header = () => {
     <Container style={{ minHeight: "6vh" }}>
       <Navbar variant="dark" expand="lg">
         <Navbar.Brand href="#">
+          <img
+            src="twindex-stats/image/ts.svg"
+            height="30"
+            className="d-inline-block align-top mr-1 p-1"
+            alt="TWINDEX Stats"
+          />
           <b
             style={{
               letterSpacing: 4,
