@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react'
 import { Card, Row, Col } from 'react-bootstrap'
+import IconTooltip from '../components/IconTooltip'
 
 interface Props {
   symbol: string
@@ -69,9 +70,9 @@ const PriceCard = ({ symbol, address, price }: Props) => {
                     opacity: 0.5,
                   }}
                 >
-                  {symbol}&nbsp;
-                  <a href="#" onClick={addToken}>
-                    <i className="fa fa-plus-circle" />
+                  {symbol}
+                  <a href="#" className="ml-2" onClick={addToken}>
+                    <IconTooltip icon="plus-circle" text={`Add ${symbol} to MetaMask`} />
                   </a>
                 </h6>
                 <h2 className="m-0">{priceDisplay}</h2>
