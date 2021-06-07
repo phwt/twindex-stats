@@ -27,7 +27,6 @@ const PriceCard = ({ symbol, address, price }: Props) => {
     async (e) => {
       e.preventDefault()
 
-      // @ts-ignore
       const wasAdded = await ethereum.request({
         method: 'wallet_watchAsset',
         params: {
@@ -46,14 +45,14 @@ const PriceCard = ({ symbol, address, price }: Props) => {
     [address, symbolIcon, symbol]
   )
 
-  const bscscanHref = useMemo(() => {
+  const bscScanHref = useMemo(() => {
     return `https://bscscan.com/token/${address}`
   }, [address])
 
   const symbolDisplay = (
     <>
       <OverlayTrigger placement="top" overlay={<Tooltip id={`tooltip-${symbol}`}>View {symbol} on BscScan </Tooltip>}>
-        <a href={bscscanHref} target="_blank">
+        <a href={bscScanHref} target="_blank" rel="noreferrer">
           <>{symbol}</>
         </a>
       </OverlayTrigger>

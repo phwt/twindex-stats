@@ -11,7 +11,6 @@ const AddressForm = () => {
 
   const handleWalletConnect = useCallback(async () => {
     if (typeof (window as any).ethereum !== 'undefined') {
-      // @ts-ignore
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
       const account = accounts[0]
       window.location.href = `?address=${account}`

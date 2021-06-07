@@ -22,7 +22,7 @@ const MintCard = ({ position }: Props) => {
               {position.loanTokenAmount} <small style={{ fontWeight: 200 }}>{position.loanTokenSymbol}</small>
             </div>
             <div>
-            <span className="d-md-block d-lg-none">Collateral: </span>
+              <span className="d-md-block d-lg-none">Collateral: </span>
               {position.collateralTokenAmount} <small style={{ fontWeight: 200 }}>{position.collateralTokenSymbol}</small>
             </div>
           </Col>
