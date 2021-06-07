@@ -2,5 +2,6 @@
   "emmet.excludeLanguages": ["markdown"],
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
-  }
+  },
+  "cSpell.words": ["dopple", "twindex"]
 }
