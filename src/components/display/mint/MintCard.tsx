@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Card, Row, Col, ProgressBar } from "react-bootstrap";
 import { MintPosition } from "../../../modules/ethers/Loan";
 
@@ -6,6 +7,16 @@ interface Props {
 }
 
 const MintCard = ({ position }: Props) => {
+  const [maintenanceMargin, setMaintenanceMargin] = useState(0);
+  const [margin, setMargin] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMaintenanceMargin(parseFloat(position.maintenanceMargin));
+      setMargin(parseFloat(position.margin));
+    }, 50);
+  }, [position.margin, position.maintenanceMargin]);
+
   return (
     <Card
       style={{
@@ -43,14 +54,8 @@ const MintCard = ({ position }: Props) => {
                   borderRadius: 30,
                 }}
               >
-                <ProgressBar
-                  variant="danger"
-                  now={parseFloat(position.maintenanceMargin)}
-                />
-                <ProgressBar
-                  now={parseFloat(position.margin)}
-                  label={`${position.margin}%`}
-                />
+                <ProgressBar variant="danger" now={maintenanceMargin} />
+                <ProgressBar now={margin} label={`${position.margin}%`} />
               </ProgressBar>
             </div>
           </Col>
