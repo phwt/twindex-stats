@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react'
-import { Card, Row, Col } from 'react-bootstrap'
+import { Card, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import IconTooltip from '../components/IconTooltip'
 
 interface Props {
@@ -46,6 +46,10 @@ const PriceCard = ({ symbol, address, price }: Props) => {
     [address, symbolIcon, symbol]
   )
 
+  const bscscanHref = useMemo(() => {
+    return `https://bscscan.com/token/${address}`
+  }, [address])
+
   return (
     <Card className="h-100">
       <Card.Body className="d-flex align-items-center justify-content-center">
@@ -67,10 +71,13 @@ const PriceCard = ({ symbol, address, price }: Props) => {
                   className="m-0"
                   style={{
                     fontWeight: 300,
-                    opacity: 0.5,
                   }}
                 >
-                  {symbol}
+                  <OverlayTrigger placement="top" overlay={<Tooltip id={`tooltip-${symbol}`}>View {symbol} on BscScan </Tooltip>}>
+                    <a href={bscscanHref} target="_blank">
+                      <>{symbol}</>
+                    </a>
+                  </OverlayTrigger>
                   <a href="#" className="ml-2" onClick={addToken}>
                     <IconTooltip icon="plus-circle" text={`Add ${symbol} to MetaMask`} />
                   </a>
