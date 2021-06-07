@@ -29,6 +29,10 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
     window.location.href = `?address=${address}`;
   }, []);
 
+  /**
+   * Request accounts from ethereum injected by the extension such as MetaMask
+   * Example: (MetaMask) in this case this method will trigger MetaMask to pop-up a confirmation dialog)
+   */
   const handleWalletConnect = useCallback(async () => {
     if (typeof (window as any).ethereum !== "undefined") {
       const accounts = await ethereum.request({
