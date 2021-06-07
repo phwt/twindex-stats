@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from "react";
 import { Card, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
+import TextTransition from "react-text-transition";
 import IconTooltip from "../common/IconTooltip";
 
 interface Props {
@@ -19,8 +20,8 @@ const PriceCard = ({ symbol, address, price }: Props) => {
   }, [symbol]);
 
   const priceDisplay = useMemo(() => {
-    if (price === "") return "$---";
-    return price;
+    const priceText = price === "" ? "$---" : price;
+    return <TextTransition inline text={priceText} />;
   }, [price]);
 
   const addToken = useCallback(

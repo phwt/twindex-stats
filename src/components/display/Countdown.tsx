@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import {
   getLockedTWINAmount,
@@ -7,6 +7,8 @@ import {
 import ReactCountdown, { CountdownTimeDelta } from "react-countdown";
 import IconTooltip from "../common/IconTooltip";
 import { useWallet } from "../../modules/contexts/WalletContext";
+import moment from "moment";
+import TextTransition from "react-text-transition";
 
 const UnitRender = ({
   value,
@@ -17,7 +19,8 @@ const UnitRender = ({
 }) => {
   return (
     <>
-      {value}&nbsp;
+      <TextTransition text={value} inline noOverflow />
+      &nbsp;
       <small
         style={{
           fontWeight: 200,
@@ -82,17 +85,31 @@ const Countdown = () => {
     })();
   }, [address]);
 
+  const unlockDateString = useMemo(() => {
+    const format = "ddd D MMM YY HH:mm:ss (G[M]TZ)";
+    if (unlockDate === 0) return moment(1625090082000).format(format);
+    else return moment(unlockDate).format(format);
+  }, [unlockDate]);
+
   return (
     <Card className="h-100">
       <Card.Body>
         <Row className="h-100 d-flex align-items-center">
           <Col md={12} lg={4} className="text-center">
-            <h4 className="m-0">{locked.amount}</h4>
-            <small className="text-muted">({locked.valueInUsd})</small> <br />
+            <h4 className="m-0">
+              <TextTransition inline text={locked.amount} />
+            </h4>
+            <small className="text-muted">
+              (<TextTransition inline text={locked.valueInUsd} />)
+            </small>
+            <br />
             <small>TWIN Locked</small>
           </Col>
           <Col md={12} lg={8} className="text-center">
             <hr className="d-lg-none d-md-block" />
+            <small className="d-block text-muted mb-1">
+              Approximately {unlockDateString}
+            </small>
             <h4 className="m-0">
               {unlockDate !== 0 ? (
                 <ReactCountdown

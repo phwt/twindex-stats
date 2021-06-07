@@ -63,7 +63,7 @@ const AddressForm = () => {
 const Header = () => {
   return (
     <Container style={{ minHeight: "6vh" }}>
-      <Navbar variant="dark" expand="lg">
+      <Navbar variant="dark" expand="lg" className="px-0">
         <Navbar.Brand href="#">
           <img
             src="image/ts-white.svg"

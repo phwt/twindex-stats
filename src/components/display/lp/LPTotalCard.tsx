@@ -18,6 +18,7 @@ const LPTotalCard = ({ lp }: Props) => {
         border: "0",
         boxShadow: "none",
       }}
+      className="fade-list"
     >
       <Card.Body>
         <Row>

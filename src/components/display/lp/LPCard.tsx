@@ -17,7 +17,7 @@ const LPCard = ({ lp }: Props) => {
         border: "1px solid #374151",
         borderRadius: 20,
       }}
-      className="mb-4"
+      className="mb-4 fade-list"
     >
       <Card.Body>
         <Row>
