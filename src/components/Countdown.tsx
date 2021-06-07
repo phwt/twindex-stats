@@ -3,7 +3,7 @@ import { Card, Col, Row } from 'react-bootstrap'
 import { getLockedTWINAmount, getUnlockDate } from '../modules/LockedTwin'
 import { getAddressInQueryString } from '../modules/Utils'
 import ReactCountdown, { CountdownTimeDelta } from 'react-countdown'
-import InfoTooltip from './InfoTooltip'
+import IconTooltip from './IconTooltip'
 
 const UnitRender = ({ value, unit }: { value: number | string; unit: string }) => {
   return (
@@ -83,8 +83,9 @@ const Countdown = () => {
             </h4>
             <small className="text-muted">
               until rewards unlock{' '}
-              <InfoTooltip
-                placement="right"
+              <IconTooltip
+                icon="info-circle"
+                placement="bottom"
                 text="The locked rewards will unlock approximately 30 days, and then be released linearly across one month within blocks 8763010->9627010"
               />
             </small>
