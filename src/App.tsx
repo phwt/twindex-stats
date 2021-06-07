@@ -23,7 +23,10 @@ const App = () => {
   return (
     <>
       <Header />
-      <Container className="pb-5" style={{ minHeight: "88vh" }}>
+      <Container
+        className="pb-4"
+        style={{ minHeight: "calc(100vh - 10vh - 6vh)" }}
+      >
         <Row>
           {/* TODO: Stop hardcoding token data */}
           <Col md="6" lg="3">
