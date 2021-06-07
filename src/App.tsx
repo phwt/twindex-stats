@@ -25,11 +25,12 @@ const App = () => {
       <Header />
       <Container className="pb-5" style={{ minHeight: '88vh' }}>
         <Row>
+          {/* TODO: Stop hardcoding token data */}
           <Col md="6" lg="3">
-            <PriceCard symbol="TWIN" price={twinPrice} />
+            <PriceCard symbol="TWIN" price={twinPrice} address="0x3806aae953a3a873D02595f76C7698a57d4C7A57" />
           </Col>
           <Col md="6" lg="3" className="mt-4 mt-md-0">
-            <PriceCard symbol="DOP" price={dopplePrice} />
+            <PriceCard symbol="DOP" price={dopplePrice} address="0x844fa82f1e54824655470970f7004dd90546bb28" />
           </Col>
           <Col md="12" lg="6" className="mt-4 mt-lg-0">
             <Countdown />

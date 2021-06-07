@@ -1,12 +1,13 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useCallback } from 'react'
 import { Card, Row, Col } from 'react-bootstrap'
 
 interface Props {
   symbol: string
+  address: string
   price: string
 }
 
-const PriceCard = ({ symbol, price }: Props) => {
+const PriceCard = ({ symbol, address, price }: Props) => {
   const symbolIcon = useMemo(() => {
     switch (symbol) {
       case 'TWIN':
@@ -20,6 +21,29 @@ const PriceCard = ({ symbol, price }: Props) => {
     if (price === '') return '$---'
     return price
   }, [price])
+
+  const addToken = useCallback(
+    async (e) => {
+      e.preventDefault()
+
+      // @ts-ignore
+      const wasAdded = await ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address,
+            symbol,
+            decimals: 18,
+            image: 'https://phwt.github.io' + symbolIcon, // TODO: Get deployment path from package.js
+          },
+        },
+      })
+
+      if (!wasAdded) alert('Add Token Error!')
+    },
+    [address, symbolIcon, symbol]
+  )
 
   return (
     <Card className="h-100">
@@ -45,7 +69,10 @@ const PriceCard = ({ symbol, price }: Props) => {
                     opacity: 0.5,
                   }}
                 >
-                  {symbol}
+                  {symbol}&nbsp;
+                  <a href="#" onClick={addToken}>
+                    <i className="fa fa-plus-circle" />
+                  </a>
                 </h6>
                 <h2 className="m-0">{priceDisplay}</h2>
               </div>
