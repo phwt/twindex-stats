@@ -23,7 +23,7 @@ const MintCard = ({ position }: Props) => {
         border: "1px solid #374151",
         borderRadius: 20,
       }}
-      className="mb-2"
+      className="mb-2 fade-list"
     >
       <Card.Body className="py-2">
         <Row>
