@@ -7,7 +7,7 @@ import LPTable from "./components/display/lp/LPSection";
 import MintSection from "./components/display/mint/MintSection";
 import PriceCard from "./components/display/PriceCard";
 import StockTable from "./components/display/stock/StockSection";
-import { getDopplePrice, getTwinPrice } from "./modules/GovernanceToken";
+import { getDopplePrice, getTwinPrice } from "./modules/ethers/GovernanceToken";
 
 const App = () => {
   const [twinPrice, setTwinPrice] = useState("");

@@ -1,5 +1,5 @@
 import { Card, Row, Col, ProgressBar } from "react-bootstrap";
-import { MintPosition } from "../../../modules/Loan";
+import { MintPosition } from "../../../modules/ethers/Loan";
 
 interface Props {
   position: MintPosition;

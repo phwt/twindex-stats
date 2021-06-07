@@ -7,7 +7,7 @@ import {
   Button,
   InputGroup,
 } from "react-bootstrap";
-import { getAddressInQueryString } from "../../modules/Utils";
+import { getAddressInQueryString } from "../../modules/ethers/Utils";
 
 const AddressForm = () => {
   const [address, setAddress] = useState(getAddressInQueryString() ?? "");

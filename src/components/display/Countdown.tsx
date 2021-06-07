@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
-import { getLockedTWINAmount, getUnlockDate } from "../../modules/LockedTwin";
-import { getAddressInQueryString } from "../../modules/Utils";
+import {
+  getLockedTWINAmount,
+  getUnlockDate,
+} from "../../modules/ethers/LockedTwin";
+import { getAddressInQueryString } from "../../modules/ethers/Utils";
 import ReactCountdown, { CountdownTimeDelta } from "react-countdown";
 import IconTooltip from "../common/IconTooltip";
 
