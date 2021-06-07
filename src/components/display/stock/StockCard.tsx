@@ -1,8 +1,8 @@
-import { Card, Row, Col } from 'react-bootstrap'
-import { StockPrice } from '../../../modules/Stock'
+import { Card, Row, Col } from "react-bootstrap";
+import { StockPrice } from "../../../modules/Stock";
 
 interface Props {
-  price: StockPrice
+  price: StockPrice;
 }
 
 const StockCard = ({ price }: Props) => {
@@ -13,7 +13,7 @@ const StockCard = ({ price }: Props) => {
   return (
     <Card
       style={{
-        border: '1px solid #374151',
+        border: "1px solid #374151",
         borderRadius: 20,
       }}
       className="mb-2"
@@ -37,10 +37,16 @@ const StockCard = ({ price }: Props) => {
         </span>
         <span className="d-md-block d-lg-none">
           <Row>
-            <Col sm={5} className="d-flex align-items-center justify-content-center">
+            <Col
+              sm={5}
+              className="d-flex align-items-center justify-content-center"
+            >
               <h3 className="text-primary m-0">{price.token}</h3>
             </Col>
-            <Col sm={7} className="d-flex align-items-center justify-content-center">
+            <Col
+              sm={7}
+              className="d-flex align-items-center justify-content-center"
+            >
               <Row>
                 <Col xs={6} className="text-right">
                   Twindex
@@ -66,7 +72,7 @@ const StockCard = ({ price }: Props) => {
         </span>
       </Card.Body>
     </Card>
-  )
-}
+  );
+};
 
-export default StockCard
+export default StockCard;

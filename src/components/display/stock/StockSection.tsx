@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { Card, Row, Col, Spinner } from 'react-bootstrap'
-import { loadStocksPrice, StockPrice } from '../../../modules/Stock'
-import StockCard from './StockCard'
+import React, { useEffect, useState } from "react";
+import { Card, Row, Col, Spinner } from "react-bootstrap";
+import { loadStocksPrice, StockPrice } from "../../../modules/Stock";
+import StockCard from "./StockCard";
 
 const StockTable = () => {
-  const [prices, setPrices] = useState<StockPrice[]>([])
+  const [prices, setPrices] = useState<StockPrice[]>([]);
 
   useEffect(() => {
-    ;(async () => {
-      setPrices(await loadStocksPrice())
-    })()
-  }, [])
+    (async () => {
+      setPrices(await loadStocksPrice());
+    })();
+  }, []);
 
   return (
     <Card
       className="p-4"
       style={{
-        background: '#192230',
+        background: "#192230",
       }}
     >
       <Card.Body className="pt-0">
@@ -44,13 +44,13 @@ const StockTable = () => {
         ) : (
           <>
             {prices.map((price) => {
-              return <StockCard key={price.token} price={price} />
+              return <StockCard key={price.token} price={price} />;
             })}
           </>
         )}
       </Card.Body>
     </Card>
-  )
-}
+  );
+};
 
-export default StockTable
+export default StockTable;

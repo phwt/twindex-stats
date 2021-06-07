@@ -1,26 +1,26 @@
-import { useEffect, useState } from 'react'
-import { Card, Row, Col, Spinner } from 'react-bootstrap'
-import MintCard from './MintCard'
-import { getMintPositions, MintPosition } from '../../../modules/Loan'
-import { getAddressInQueryString } from '../../../modules/Utils'
-import IconTooltip from '../../common/IconTooltip'
+import { useEffect, useState } from "react";
+import { Card, Row, Col, Spinner } from "react-bootstrap";
+import MintCard from "./MintCard";
+import { getMintPositions, MintPosition } from "../../../modules/Loan";
+import { getAddressInQueryString } from "../../../modules/Utils";
+import IconTooltip from "../../common/IconTooltip";
 
 const MintSection = () => {
-  const [positions, setPositions] = useState<MintPosition[] | undefined>([])
+  const [positions, setPositions] = useState<MintPosition[] | undefined>([]);
 
   useEffect(() => {
-    ;(async () => {
-      const address = getAddressInQueryString()
-      if (address) setPositions(await getMintPositions(address))
-      else setPositions(undefined)
-    })()
-  }, [])
+    (async () => {
+      const address = getAddressInQueryString();
+      if (address) setPositions(await getMintPositions(address));
+      else setPositions(undefined);
+    })();
+  }, []);
 
   return (
     <Card
       className="p-4"
       style={{
-        background: '#192230',
+        background: "#192230",
       }}
     >
       <Card.Body className="pt-0">
@@ -28,7 +28,10 @@ const MintSection = () => {
           Mint Positions
           <small className="d-inline d-lg-none">
             &nbsp;
-            <IconTooltip icon="info-circle" text="Your position could be liquidated if the health reaches 0%" />
+            <IconTooltip
+              icon="info-circle"
+              text="Your position could be liquidated if the health reaches 0%"
+            />
           </small>
         </h4>
 
@@ -37,9 +40,16 @@ const MintSection = () => {
             Asset <br />
             Collateral
           </Col>
-          <Col className="d-flex align-items-center justify-content-center" style={{ fontWeight: 300 }} md={7}>
+          <Col
+            className="d-flex align-items-center justify-content-center"
+            style={{ fontWeight: 300 }}
+            md={7}
+          >
             Health&nbsp;
-            <IconTooltip icon="info-circle" text="Your position could be liquidated if the health reaches 0%" />
+            <IconTooltip
+              icon="info-circle"
+              text="Your position could be liquidated if the health reaches 0%"
+            />
           </Col>
         </Row>
 
@@ -52,15 +62,22 @@ const MintSection = () => {
             )}
 
             {positions.map((position, index) => {
-              return <MintCard key={`${position.collateralTokenSymbol}-${position.loanTokenSymbol}-${index}`} position={position} />
+              return (
+                <MintCard
+                  key={`${position.collateralTokenSymbol}-${position.loanTokenSymbol}-${index}`}
+                  position={position}
+                />
+              );
             })}
           </>
         ) : (
-          <div className="text-center text-muted w-100 mt-5 mb-4">No Wallet Connected </div>
+          <div className="text-center text-muted w-100 mt-5 mb-4">
+            No Wallet Connected{" "}
+          </div>
         )}
       </Card.Body>
     </Card>
-  )
-}
+  );
+};
 
-export default MintSection
+export default MintSection;

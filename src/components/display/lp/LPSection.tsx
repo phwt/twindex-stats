@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react'
-import { Card, Row, Col, Spinner } from 'react-bootstrap'
-import { getLPs, LPPrice } from '../../../modules/LiquidityPool'
-import { getAddressInQueryString } from '../../../modules/Utils'
-import LPCard from './LPCard'
-import LPTotalCard from './LPTotalCard'
+import { useEffect, useState } from "react";
+import { Card, Row, Col, Spinner } from "react-bootstrap";
+import { getLPs, LPPrice } from "../../../modules/LiquidityPool";
+import { getAddressInQueryString } from "../../../modules/Utils";
+import LPCard from "./LPCard";
+import LPTotalCard from "./LPTotalCard";
 
 const LPSection = () => {
-  const [LPs, setLPs] = useState<LPPrice[] | undefined>([])
-  const [totalLP, setTotalLP] = useState<any>({})
+  const [LPs, setLPs] = useState<LPPrice[] | undefined>([]);
+  const [totalLP, setTotalLP] = useState<any>({});
 
   useEffect(() => {
-    ;(async () => {
-      const address = getAddressInQueryString()
+    (async () => {
+      const address = getAddressInQueryString();
       if (address) {
-        const lps = await getLPs(address)
-        setLPs(lps.lps)
-        setTotalLP(lps.total)
+        const lps = await getLPs(address);
+        setLPs(lps.lps);
+        setTotalLP(lps.total);
       } else {
-        setLPs(undefined)
+        setLPs(undefined);
       }
-    })()
-  }, [])
+    })();
+  }, []);
 
   return (
     <Card
       className="p-4"
       style={{
-        background: '#192230',
+        background: "#192230",
       }}
     >
       <Card.Body className="pt-0">
@@ -56,17 +56,19 @@ const LPSection = () => {
             )}
 
             {LPs.map((lp, index) => {
-              return <LPCard key={index} lp={lp} />
+              return <LPCard key={index} lp={lp} />;
             })}
 
             {!!LPs.length && <LPTotalCard lp={totalLP} />}
           </>
         ) : (
-          <div className="text-center text-muted w-100 mt-5 mb-4">No Wallet Connected </div>
+          <div className="text-center text-muted w-100 mt-5 mb-4">
+            No Wallet Connected{" "}
+          </div>
         )}
       </Card.Body>
     </Card>
-  )
-}
+  );
+};
 
-export default LPSection
+export default LPSection;

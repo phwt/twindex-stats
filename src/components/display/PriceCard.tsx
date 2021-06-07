@@ -1,57 +1,62 @@
-import React, { useMemo, useCallback } from 'react'
-import { Card, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import IconTooltip from '../common/IconTooltip'
+import React, { useMemo, useCallback } from "react";
+import { Card, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
+import IconTooltip from "../common/IconTooltip";
 
 interface Props {
-  symbol: string
-  address: string
-  price: string
+  symbol: string;
+  address: string;
+  price: string;
 }
 
 const PriceCard = ({ symbol, address, price }: Props) => {
   const symbolIcon = useMemo(() => {
     switch (symbol) {
-      case 'TWIN':
-        return '/twindex-stats/image/twin.svg'
-      case 'DOP':
-        return '/twindex-stats/image/dop.svg'
+      case "TWIN":
+        return "/twindex-stats/image/twin.svg";
+      case "DOP":
+        return "/twindex-stats/image/dop.svg";
     }
-  }, [symbol])
+  }, [symbol]);
 
   const priceDisplay = useMemo(() => {
-    if (price === '') return '$---'
-    return price
-  }, [price])
+    if (price === "") return "$---";
+    return price;
+  }, [price]);
 
   const addToken = useCallback(
     async (e) => {
-      e.preventDefault()
+      e.preventDefault();
 
       const wasAdded = await ethereum.request({
-        method: 'wallet_watchAsset',
+        method: "wallet_watchAsset",
         params: {
-          type: 'ERC20',
+          type: "ERC20",
           options: {
             address,
             symbol,
             decimals: 18,
-            image: 'https://phwt.github.io' + symbolIcon, // TODO: Get deployment path from package.js
+            image: "https://phwt.github.io" + symbolIcon, // TODO: Get deployment path from package.js
           },
         },
-      })
+      });
 
-      if (!wasAdded) alert('Add Token Error!')
+      if (!wasAdded) alert("Add Token Error!");
     },
     [address, symbolIcon, symbol]
-  )
+  );
 
   const bscScanHref = useMemo(() => {
-    return `https://bscscan.com/token/${address}`
-  }, [address])
+    return `https://bscscan.com/token/${address}`;
+  }, [address]);
 
   const symbolDisplay = (
     <>
-      <OverlayTrigger placement="top" overlay={<Tooltip id={`tooltip-${symbol}`}>View {symbol} on BscScan </Tooltip>}>
+      <OverlayTrigger
+        placement="top"
+        overlay={
+          <Tooltip id={`tooltip-${symbol}`}>View {symbol} on BscScan </Tooltip>
+        }
+      >
         <a href={bscScanHref} target="_blank" rel="noreferrer">
           <>{symbol}</>
         </a>
@@ -60,19 +65,23 @@ const PriceCard = ({ symbol, address, price }: Props) => {
         <IconTooltip icon="plus-circle" text={`Add ${symbol} to MetaMask`} />
       </a>
     </>
-  )
+  );
 
   return (
     <Card className="h-100">
       <Card.Body className="d-flex align-items-center justify-content-center">
         <Row>
-          <Col md="12" lg="5" className="text-center d-flex align-items-center justify-content-center">
+          <Col
+            md="12"
+            lg="5"
+            className="text-center d-flex align-items-center justify-content-center"
+          >
             <img
               src={symbolIcon}
               alt="Token Icon"
               className="img-fluid"
               style={{
-                height: '3em',
+                height: "3em",
               }}
             />
           </Col>
@@ -108,7 +117,7 @@ const PriceCard = ({ symbol, address, price }: Props) => {
         </Row>
       </Card.Body>
     </Card>
-  )
-}
+  );
+};
 
-export default PriceCard
+export default PriceCard;

@@ -1,11 +1,17 @@
-import { useEffect, useState } from 'react'
-import { Card, Col, Row } from 'react-bootstrap'
-import { getLockedTWINAmount, getUnlockDate } from '../../modules/LockedTwin'
-import { getAddressInQueryString } from '../../modules/Utils'
-import ReactCountdown, { CountdownTimeDelta } from 'react-countdown'
-import IconTooltip from '../common/IconTooltip'
+import { useEffect, useState } from "react";
+import { Card, Col, Row } from "react-bootstrap";
+import { getLockedTWINAmount, getUnlockDate } from "../../modules/LockedTwin";
+import { getAddressInQueryString } from "../../modules/Utils";
+import ReactCountdown, { CountdownTimeDelta } from "react-countdown";
+import IconTooltip from "../common/IconTooltip";
 
-const UnitRender = ({ value, unit }: { value: number | string; unit: string }) => {
+const UnitRender = ({
+  value,
+  unit,
+}: {
+  value: number | string;
+  unit: string;
+}) => {
   return (
     <>
       {value}&nbsp;
@@ -17,11 +23,17 @@ const UnitRender = ({ value, unit }: { value: number | string; unit: string }) =
         {unit}
       </small>
     </>
-  )
-}
+  );
+};
 
-const CountdownRenderer = ({ days, hours, minutes, seconds, completed }: CountdownTimeDelta) => {
-  if (completed) return <span>Unlocked</span>
+const CountdownRenderer = ({
+  days,
+  hours,
+  minutes,
+  seconds,
+  completed,
+}: CountdownTimeDelta) => {
+  if (completed) return <span>Unlocked</span>;
   return (
     <span>
       <UnitRender value={days} unit="DAYS" />
@@ -32,8 +44,8 @@ const CountdownRenderer = ({ days, hours, minutes, seconds, completed }: Countdo
       &nbsp; &nbsp;
       <UnitRender value={seconds} unit="SEC" />
     </span>
-  )
-}
+  );
+};
 
 const CountdownPlaceholder = () => {
   return (
@@ -46,26 +58,26 @@ const CountdownPlaceholder = () => {
       &nbsp; &nbsp;
       <UnitRender value="-" unit="SEC" />
     </span>
-  )
-}
+  );
+};
 
 const Countdown = () => {
   const [locked, setLocked] = useState<{
-    amount: string
-    valueInUsd: string
+    amount: string;
+    valueInUsd: string;
   }>({
-    amount: '0.00',
-    valueInUsd: '$0.00',
-  })
-  const [unlockDate, setUnlockDate] = useState(0)
+    amount: "0.00",
+    valueInUsd: "$0.00",
+  });
+  const [unlockDate, setUnlockDate] = useState(0);
 
   useEffect(() => {
-    ;(async () => {
-      const address = getAddressInQueryString()
-      if (address) setLocked(await getLockedTWINAmount(address))
-      setUnlockDate(await getUnlockDate())
-    })()
-  }, [])
+    (async () => {
+      const address = getAddressInQueryString();
+      if (address) setLocked(await getLockedTWINAmount(address));
+      setUnlockDate(await getUnlockDate());
+    })();
+  }, []);
 
   return (
     <Card className="h-100">
@@ -79,10 +91,17 @@ const Countdown = () => {
           <Col md={12} lg={8} className="text-center">
             <hr className="d-lg-none d-md-block" />
             <h4 className="m-0">
-              {unlockDate !== 0 ? <ReactCountdown date={unlockDate} renderer={CountdownRenderer} /> : <CountdownPlaceholder />}
+              {unlockDate !== 0 ? (
+                <ReactCountdown
+                  date={unlockDate}
+                  renderer={CountdownRenderer}
+                />
+              ) : (
+                <CountdownPlaceholder />
+              )}
             </h4>
             <small className="text-muted">
-              until rewards unlock{' '}
+              until rewards unlock{" "}
               <IconTooltip
                 icon="info-circle"
                 placement="bottom"
@@ -93,7 +112,7 @@ const Countdown = () => {
         </Row>
       </Card.Body>
     </Card>
-  )
-}
+  );
+};
 
-export default Countdown
+export default Countdown;
