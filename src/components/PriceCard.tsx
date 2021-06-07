@@ -50,6 +50,19 @@ const PriceCard = ({ symbol, address, price }: Props) => {
     return `https://bscscan.com/token/${address}`
   }, [address])
 
+  const symbolDisplay = (
+    <>
+      <OverlayTrigger placement="top" overlay={<Tooltip id={`tooltip-${symbol}`}>View {symbol} on BscScan </Tooltip>}>
+        <a href={bscscanHref} target="_blank">
+          <>{symbol}</>
+        </a>
+      </OverlayTrigger>
+      <a href="#" className="ml-2" onClick={addToken}>
+        <IconTooltip icon="plus-circle" text={`Add ${symbol} to MetaMask`} />
+      </a>
+    </>
+  )
+
   return (
     <Card className="h-100">
       <Card.Body className="d-flex align-items-center justify-content-center">
@@ -73,14 +86,7 @@ const PriceCard = ({ symbol, address, price }: Props) => {
                     fontWeight: 300,
                   }}
                 >
-                  <OverlayTrigger placement="top" overlay={<Tooltip id={`tooltip-${symbol}`}>View {symbol} on BscScan </Tooltip>}>
-                    <a href={bscscanHref} target="_blank">
-                      <>{symbol}</>
-                    </a>
-                  </OverlayTrigger>
-                  <a href="#" className="ml-2" onClick={addToken}>
-                    <IconTooltip icon="plus-circle" text={`Add ${symbol} to MetaMask`} />
-                  </a>
+                  {symbolDisplay}
                 </h6>
                 <h2 className="m-0">{priceDisplay}</h2>
               </div>
@@ -92,10 +98,9 @@ const PriceCard = ({ symbol, address, price }: Props) => {
                   className="m-0 mt-3"
                   style={{
                     fontWeight: 300,
-                    opacity: 0.5,
                   }}
                 >
-                  {symbol}
+                  {symbolDisplay}
                 </h6>
                 <h2 className="m-0">{priceDisplay}</h2>
               </div>
