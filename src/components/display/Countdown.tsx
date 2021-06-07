@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import {
   getLockedTWINAmount,
@@ -7,6 +7,7 @@ import {
 import ReactCountdown, { CountdownTimeDelta } from "react-countdown";
 import IconTooltip from "../common/IconTooltip";
 import { useWallet } from "../../modules/contexts/WalletContext";
+import moment from "moment";
 
 const UnitRender = ({
   value,
@@ -82,6 +83,12 @@ const Countdown = () => {
     })();
   }, [address]);
 
+  const unlockDateString = useMemo(() => {
+    const format = "ddd D MMM YY HH:mm:ss (G[M]TZ)";
+    if (unlockDate === 0) return moment(1625090082000).format(format);
+    else return moment(unlockDate).format(format);
+  }, [unlockDate]);
+
   return (
     <Card className="h-100">
       <Card.Body>
@@ -93,6 +100,9 @@ const Countdown = () => {
           </Col>
           <Col md={12} lg={8} className="text-center">
             <hr className="d-lg-none d-md-block" />
+            <small className="d-block text-muted mb-1">
+              Approximately {unlockDateString}
+            </small>
             <h4 className="m-0">
               {unlockDate !== 0 ? (
                 <ReactCountdown
