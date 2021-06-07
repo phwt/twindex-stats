@@ -66,7 +66,7 @@ const Header = () => {
       <Navbar variant="dark" expand="lg">
         <Navbar.Brand href="#">
           <img
-            src="twindex-stats/image/ts-white.svg"
+            src="image/ts-white.svg"
             height="30"
             className="d-inline-block align-top mr-1 p-1"
             alt="TWINDEX Stats"
