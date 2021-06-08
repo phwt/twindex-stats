@@ -47,9 +47,21 @@ export interface LPPrice {
   token0Amount: string;
   token1Amount: string;
   lpAmount: string;
+  /**
+   * @deprecated Rewards no longer locked use unclaimedTwin instead
+   */
   unlockedTwin: string;
+  /**
+   * @deprecated Rewards no longer locked use unclaimedTwinValue instead
+   */
   unlockedTwinValue: string;
+  /**
+   * @deprecated Rewards no longer locked use unclaimedTwin instead
+   */
   lockedTwin: string;
+  /**
+   * @deprecated Rewards no longer locked use unclaimedTwinValue instead
+   */
   lockedTwinValue: string;
   lpValue: string;
   unformattedLpValue: any;
