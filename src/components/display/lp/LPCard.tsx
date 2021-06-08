@@ -74,12 +74,11 @@ const LPCard = ({ lp }: Props) => {
                 Pending TWIN
               </span>
               <div>
-                <i className="fa fa-unlock" /> {lp.unlockedTwin}{" "}
-                <small className="text-muted">({lp.unlockedTwinValue})</small>
-              </div>
-              <div>
-                <i className="fa fa-lock" /> {lp.lockedTwin}{" "}
-                <small className="text-muted">({lp.lockedTwinValue})</small>
+                {lp.unclaimedTwin}{" "}
+                <small style={{ fontWeight: 200 }}>TWIN</small>
+                <small className="text-muted d-block">
+                  ({lp.unclaimedTwinValue})
+                </small>
               </div>
             </div>
           </Col>
