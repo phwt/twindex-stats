@@ -47,22 +47,6 @@ export interface LPPrice {
   token0Amount: string;
   token1Amount: string;
   lpAmount: string;
-  /**
-   * @deprecated Rewards no longer locked use unclaimedTwin instead
-   */
-  unlockedTwin: string;
-  /**
-   * @deprecated Rewards no longer locked use unclaimedTwinValue instead
-   */
-  unlockedTwinValue: string;
-  /**
-   * @deprecated Rewards no longer locked use unclaimedTwin instead
-   */
-  lockedTwin: string;
-  /**
-   * @deprecated Rewards no longer locked use unclaimedTwinValue instead
-   */
-  lockedTwinValue: string;
   lpValue: string;
   unformattedLpValue: any;
   pendingTwin: any;
@@ -103,14 +87,6 @@ const getDollyLPs = async (address: string): Promise<LPPrice[]> => {
         address
       );
       const twinPrice = await getTokenPriceWithDopPair(TOKENS.TWIN, dollyPrice);
-      const unlockedTwin = pendingTwin.mul(20).div(100);
-      const unlockedTwinValue = unlockedTwin
-        .mul(twinPrice)
-        .div(ethers.utils.parseEther("1"));
-      const lockedTwin = pendingTwin.mul(80).div(100);
-      const lockedTwinValue = lockedTwin
-        .mul(twinPrice)
-        .div(ethers.utils.parseEther("1"));
 
       const unclaimedTwinValue = pendingTwin
         .mul(twinPrice)
@@ -129,16 +105,6 @@ const getDollyLPs = async (address: string): Promise<LPPrice[]> => {
           lpAmount: new Intl.NumberFormat().format(
             parseFloat(Number(ethers.utils.formatEther(lpAmount)).toFixed(2))
           ),
-          unlockedTwin: new Intl.NumberFormat().format(
-            parseFloat(
-              Number(ethers.utils.formatEther(unlockedTwin)).toFixed(2)
-            )
-          ),
-          unlockedTwinValue: formatUsd(unlockedTwinValue),
-          lockedTwin: new Intl.NumberFormat().format(
-            parseFloat(Number(ethers.utils.formatEther(lockedTwin)).toFixed(2))
-          ),
-          lockedTwinValue: formatUsd(lockedTwinValue),
           lpValue: formatUsd(lpValue),
           unformattedLpValue: lpValue,
           pendingTwin,
@@ -208,14 +174,6 @@ const getDopLPs = async (address: string): Promise<LPPrice[]> => {
         address
       );
       const twinPrice = await getTokenPriceWithDopPair(TOKENS.TWIN, dollyPrice);
-      const unlockedTwin = pendingTwin.mul(20).div(100);
-      const unlockedTwinValue = unlockedTwin
-        .mul(twinPrice)
-        .div(ethers.utils.parseEther("1"));
-      const lockedTwin = pendingTwin.mul(80).div(100);
-      const lockedTwinValue = lockedTwin
-        .mul(twinPrice)
-        .div(ethers.utils.parseEther("1"));
 
       const unclaimedTwinValue = pendingTwin
         .mul(twinPrice)
@@ -234,16 +192,6 @@ const getDopLPs = async (address: string): Promise<LPPrice[]> => {
           lpAmount: new Intl.NumberFormat().format(
             parseFloat(Number(ethers.utils.formatEther(lpAmount)).toFixed(2))
           ),
-          unlockedTwin: new Intl.NumberFormat().format(
-            parseFloat(
-              Number(ethers.utils.formatEther(unlockedTwin)).toFixed(2)
-            )
-          ),
-          unlockedTwinValue: formatUsd(unlockedTwinValue),
-          lockedTwin: new Intl.NumberFormat().format(
-            parseFloat(Number(ethers.utils.formatEther(lockedTwin)).toFixed(2))
-          ),
-          lockedTwinValue: formatUsd(lockedTwinValue),
           lpValue: formatUsd(lpValue),
           unformattedLpValue: lpValue,
           pendingTwin,
@@ -275,14 +223,6 @@ export const getLPs = async (address: string) => {
 
   const dollyPrice = await getOracleDollyPrice();
   const twinPrice = await getTokenPriceWithDopPair(TOKENS.TWIN, dollyPrice);
-  const unlockedTwin = totalPendingTwins.mul(20).div(100);
-  const unlockedTwinValue = unlockedTwin
-    .mul(twinPrice)
-    .div(ethers.utils.parseEther("1"));
-  const lockedTwin = totalPendingTwins.mul(80).div(100);
-  const lockedTwinValue = lockedTwin
-    .mul(twinPrice)
-    .div(ethers.utils.parseEther("1"));
 
   const unclaimedTwinValue = totalPendingTwins
     .mul(twinPrice)
@@ -291,14 +231,6 @@ export const getLPs = async (address: string) => {
   return {
     lps: combineLPs,
     total: {
-      unlockedTwin: new Intl.NumberFormat().format(
-        parseFloat(Number(ethers.utils.formatEther(unlockedTwin)).toFixed(2))
-      ),
-      unlockedTwinValue: formatUsd(unlockedTwinValue),
-      lockedTwin: new Intl.NumberFormat().format(
-        parseFloat(Number(ethers.utils.formatEther(lockedTwin)).toFixed(2))
-      ),
-      lockedTwinValue: formatUsd(lockedTwinValue),
       lpValue: formatUsd(totalValue),
       unclaimedTwin: new Intl.NumberFormat().format(
         parseFloat(
