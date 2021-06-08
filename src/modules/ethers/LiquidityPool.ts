@@ -66,6 +66,8 @@ export interface LPPrice {
   lpValue: string;
   unformattedLpValue: any;
   pendingTwin: any;
+  unclaimedTwin: string;
+  unclaimedTwinValue: string;
 }
 
 const getDollyLPs = async (address: string): Promise<LPPrice[]> => {
@@ -110,6 +112,10 @@ const getDollyLPs = async (address: string): Promise<LPPrice[]> => {
         .mul(twinPrice)
         .div(ethers.utils.parseEther("1"));
 
+      const unclaimedTwinValue = pendingTwin
+        .mul(twinPrice)
+        .div(ethers.utils.parseEther("1"));
+
       if (lpAmount.gt(0)) {
         return {
           token0Symbol: token,
@@ -136,6 +142,10 @@ const getDollyLPs = async (address: string): Promise<LPPrice[]> => {
           lpValue: formatUsd(lpValue),
           unformattedLpValue: lpValue,
           pendingTwin,
+          unclaimedTwin: new Intl.NumberFormat().format(
+            parseFloat(Number(ethers.utils.formatEther(pendingTwin)).toFixed(2))
+          ),
+          unclaimedTwinValue: formatUsd(unclaimedTwinValue),
         };
       } else {
         return undefined;
@@ -207,6 +217,10 @@ const getDopLPs = async (address: string): Promise<LPPrice[]> => {
         .mul(twinPrice)
         .div(ethers.utils.parseEther("1"));
 
+      const unclaimedTwinValue = pendingTwin
+        .mul(twinPrice)
+        .div(ethers.utils.parseEther("1"));
+
       if (lpAmount.gt(0)) {
         return {
           token0Symbol: token,
@@ -233,6 +247,10 @@ const getDopLPs = async (address: string): Promise<LPPrice[]> => {
           lpValue: formatUsd(lpValue),
           unformattedLpValue: lpValue,
           pendingTwin,
+          unclaimedTwin: new Intl.NumberFormat().format(
+            parseFloat(Number(ethers.utils.formatEther(pendingTwin)).toFixed(2))
+          ),
+          unclaimedTwinValue,
         };
       } else {
         return undefined;
@@ -266,6 +284,10 @@ export const getLPs = async (address: string) => {
     .mul(twinPrice)
     .div(ethers.utils.parseEther("1"));
 
+  const unclaimedTwinValue = totalPendingTwins
+    .mul(twinPrice)
+    .div(ethers.utils.parseEther("1"));
+
   return {
     lps: combineLPs,
     total: {
@@ -278,6 +300,12 @@ export const getLPs = async (address: string) => {
       ),
       lockedTwinValue: formatUsd(lockedTwinValue),
       lpValue: formatUsd(totalValue),
+      unclaimedTwin: new Intl.NumberFormat().format(
+        parseFloat(
+          Number(ethers.utils.formatEther(totalPendingTwins)).toFixed(2)
+        )
+      ),
+      unclaimedTwinValue: formatUsd(unclaimedTwinValue),
     },
   };
 };
