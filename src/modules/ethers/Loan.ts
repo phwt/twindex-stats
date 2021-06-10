@@ -36,8 +36,13 @@ export interface MintPosition {
 
 export const getMintPositions = async (
   address: string
-): Promise<MintPosition[]> => {
+): Promise<MintPosition[] | null> => {
   const loans = await getUserLoans(address);
+
+  if (!loans.length) {
+    return null;
+  }
+
   return loans
     .map((loan: any) => {
       const COLLATERAL_THRESHOLD = ethers.utils.parseEther("0.01");

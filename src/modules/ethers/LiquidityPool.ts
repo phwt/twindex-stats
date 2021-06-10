@@ -214,6 +214,10 @@ export const getLPs = async (address: string) => {
   const dopLPs = await getDopLPs(address);
   const combineLPs = [...dollyLPs, ...dopLPs];
 
+  if (!combineLPs.length) {
+    return null;
+  }
+
   const totalValue = combineLPs
     .map((r) => r.unformattedLpValue)
     .reduce((sum, value) => sum.add(value));
