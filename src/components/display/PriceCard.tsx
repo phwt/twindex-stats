@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, {
   useState,
   useMemo,
@@ -28,6 +29,7 @@ interface Props {
 }
 
 const PriceCard = ({ symbol, address, price }: Props) => {
+  const basePriceClass = "m-0 transition-5";
   const [priceClass, setPriceClass] = useState("");
   const [transitionDirection, setTransitionDirection] =
     useState<"up" | "down">("up");
@@ -48,17 +50,17 @@ const PriceCard = ({ symbol, address, price }: Props) => {
         previousPriceString.slice(1, previousPriceString.length)
       );
       if (currentPrice < previousPrice) {
-        setPriceClass("m-0 transition-5 text-danger");
-        setTimeout(() => {
-          setPriceClass("m-0 transition-5");
-        }, 500);
+        setPriceClass("text-danger");
         setTransitionDirection("down");
-      } else if (currentPrice > previousPrice) {
-        setPriceClass("m-0 transition-5 text-success");
         setTimeout(() => {
-          setPriceClass("m-0 transition-5");
+          setPriceClass("");
         }, 500);
+      } else if (currentPrice > previousPrice) {
+        setPriceClass("text-success");
         setTransitionDirection("up");
+        setTimeout(() => {
+          setPriceClass("");
+        }, 500);
       }
     }
   }, [price]);
@@ -143,7 +145,9 @@ const PriceCard = ({ symbol, address, price }: Props) => {
                 >
                   {symbolDisplay}
                 </h6>
-                <h2 className={priceClass}>{priceDisplay}</h2>
+                <h2 className={clsx(basePriceClass, priceClass)}>
+                  {priceDisplay}
+                </h2>
               </div>
             </div>
 
@@ -157,7 +161,9 @@ const PriceCard = ({ symbol, address, price }: Props) => {
                 >
                   {symbolDisplay}
                 </h6>
-                <h2 className={priceClass}>{priceDisplay}</h2>
+                <h2 className={clsx(basePriceClass, priceClass)}>
+                  {priceDisplay}
+                </h2>
               </div>
             </div>
           </Col>
