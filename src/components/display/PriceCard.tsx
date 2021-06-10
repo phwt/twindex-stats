@@ -1,7 +1,25 @@
-import React, { useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import { Card, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import TextTransition from "react-text-transition";
 import IconTooltip from "../common/IconTooltip";
+
+/**
+ * useEffect with previous value
+ * https://stackoverflow.com/a/57706747/7405706
+ *  */
+const usePrevious = <T extends unknown>(value: T): T | undefined => {
+  const ref = useRef<T>();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
 
 interface Props {
   symbol: string;
@@ -10,6 +28,8 @@ interface Props {
 }
 
 const PriceCard = ({ symbol, address, price }: Props) => {
+  const [priceClass, setPriceClass] = useState("");
+  const previousPriceString = usePrevious(price);
   const symbolIcon = useMemo(() => {
     switch (symbol) {
       case "TWIN":
@@ -18,6 +38,26 @@ const PriceCard = ({ symbol, address, price }: Props) => {
         return "/twindex-stats/image/dop.svg";
     }
   }, [symbol]);
+
+  useEffect(() => {
+    if (previousPriceString !== undefined && price !== "") {
+      const currentPrice = parseFloat(price.slice(1, price.length));
+      const previousPrice = parseFloat(
+        previousPriceString.slice(1, previousPriceString.length)
+      );
+      if (currentPrice < previousPrice) {
+        setPriceClass("m-0 transition-5 text-danger");
+        setTimeout(() => {
+          setPriceClass("m-0 transition-5");
+        }, 500);
+      } else if (currentPrice > previousPrice) {
+        setPriceClass("m-0 transition-5 text-success");
+        setTimeout(() => {
+          setPriceClass("m-0 transition-5");
+        }, 500);
+      }
+    }
+  }, [price]);
 
   const priceDisplay = useMemo(() => {
     const priceText = price === "" ? "$---" : price;
@@ -97,7 +137,7 @@ const PriceCard = ({ symbol, address, price }: Props) => {
                 >
                   {symbolDisplay}
                 </h6>
-                <h2 className="m-0">{priceDisplay}</h2>
+                <h2 className={priceClass}>{priceDisplay}</h2>
               </div>
             </div>
 
@@ -111,7 +151,7 @@ const PriceCard = ({ symbol, address, price }: Props) => {
                 >
                   {symbolDisplay}
                 </h6>
-                <h2 className="m-0">{priceDisplay}</h2>
+                <h2 className={priceClass}>{priceDisplay}</h2>
               </div>
             </div>
           </Col>
