@@ -8,6 +8,7 @@ import MintSection from "./components/display/mint/MintSection";
 import PriceCard from "./components/display/PriceCard";
 import StockTable from "./components/display/stock/StockSection";
 import { getDopplePrice, getTwinPrice } from "./modules/ethers/GovernanceToken";
+import PriceTitle from "./components/common/PriceTitle";
 
 const App = () => {
   const [twinPrice, setTwinPrice] = useState("");
@@ -27,6 +28,7 @@ const App = () => {
   return (
     <>
       <Header />
+      <PriceTitle twinPrice={twinPrice} dopPrice={dopplePrice} />
       <Container
         className="pb-4"
         style={{ minHeight: "calc(100vh - 10vh - 6vh)" }}
