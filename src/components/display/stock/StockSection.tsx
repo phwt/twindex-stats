@@ -8,7 +8,9 @@ const StockTable = () => {
 
   useEffect(() => {
     (async () => {
-      setPrices(await loadStocksPrice());
+      setInterval(async () => {
+        setPrices(await loadStocksPrice());
+      }, 30000);
     })();
   }, []);
 
