@@ -10,13 +10,7 @@ import { useWallet } from "../../modules/contexts/WalletContext";
 import moment from "moment";
 import TextTransition from "react-text-transition";
 
-const UnitRender = ({
-  value,
-  unit,
-}: {
-  value: number | string;
-  unit: string;
-}) => {
+const UnitRender = ({ value, unit }: { value: string; unit: string }) => {
   return (
     <>
       <TextTransition text={value} inline noOverflow />
@@ -42,13 +36,13 @@ const CountdownRenderer = ({
   if (completed) return <span>Unlocked</span>;
   return (
     <span>
-      <UnitRender value={days} unit="DAYS" />
+      <UnitRender value={String(days)} unit="DAYS" />
       &nbsp; &nbsp;
-      <UnitRender value={hours} unit="HR" />
+      <UnitRender value={String(hours).padStart(2, "0")} unit="HR" />
       &nbsp; &nbsp;
-      <UnitRender value={minutes} unit="MIN" />
+      <UnitRender value={String(minutes).padStart(2, "0")} unit="MIN" />
       &nbsp; &nbsp;
-      <UnitRender value={seconds} unit="SEC" />
+      <UnitRender value={String(seconds).padStart(2, "0")} unit="SEC" />
     </span>
   );
 };

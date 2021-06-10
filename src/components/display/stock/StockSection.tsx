@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import moment from "moment-timezone";
+import React, { useEffect, useMemo, useState } from "react";
 import { Card, Row, Col, Spinner } from "react-bootstrap";
 import { loadStocksPrice, StockPrice } from "../../../modules/ethers/Stock";
 import StockCard from "./StockCard";
@@ -6,11 +7,23 @@ import StockCard from "./StockCard";
 const StockTable = () => {
   const [prices, setPrices] = useState<StockPrice[]>([]);
 
+  const isTradingHours = useMemo(() => {
+    const dateToday = moment().format("YYYY-MM-DD");
+    const openTime = moment.tz(`${dateToday} 09:30`, "America/New_York");
+    const closeTime = moment.tz(`${dateToday} 16:00`, "America/New_York");
+    return moment().isBetween(openTime, closeTime);
+  }, []);
+
   useEffect(() => {
+    // Faster refresh rate on trading hours
+    const interval = isTradingHours ? 5000 : 30000;
     (async () => {
       setPrices(await loadStocksPrice());
+      setInterval(async () => {
+        setPrices(await loadStocksPrice());
+      }, interval);
     })();
-  }, []);
+  }, [isTradingHours]);
 
   return (
     <Card
