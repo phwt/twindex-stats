@@ -29,6 +29,8 @@ interface Props {
 
 const PriceCard = ({ symbol, address, price }: Props) => {
   const [priceClass, setPriceClass] = useState("");
+  const [transitionDirection, setTransitionDirection] =
+    useState<"up" | "down">("up");
   const previousPriceString = usePrevious(price);
   const symbolIcon = useMemo(() => {
     switch (symbol) {
@@ -50,19 +52,23 @@ const PriceCard = ({ symbol, address, price }: Props) => {
         setTimeout(() => {
           setPriceClass("m-0 transition-5");
         }, 500);
+        setTransitionDirection("down");
       } else if (currentPrice > previousPrice) {
         setPriceClass("m-0 transition-5 text-success");
         setTimeout(() => {
           setPriceClass("m-0 transition-5");
         }, 500);
+        setTransitionDirection("up");
       }
     }
   }, [price]);
 
   const priceDisplay = useMemo(() => {
     const priceText = price === "" ? "$---" : price;
-    return <TextTransition inline text={priceText} />;
-  }, [price]);
+    return (
+      <TextTransition inline text={priceText} direction={transitionDirection} />
+    );
+  }, [price, transitionDirection]);
 
   const addToken = useCallback(
     async (e) => {
