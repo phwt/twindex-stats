@@ -6,6 +6,8 @@ import {
   Form,
   Button,
   InputGroup,
+  OverlayTrigger,
+  Tooltip,
 } from "react-bootstrap";
 import { useWallet } from "../../modules/contexts/WalletContext";
 
@@ -90,8 +92,27 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            {/* <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link> */}
+            <OverlayTrigger
+              placement="bottom"
+              overlay={
+                <Tooltip id="tooltip-feedback">
+                  What's went wrong?
+                  <br />
+                  What could be improved?
+                  <br />
+                  I'd love to hear from you!
+                </Tooltip>
+              }
+            >
+              <Nav.Link
+                href="https://forms.gle/GdrXFvgqvRMML3pr8"
+                style={{ fontWeight: 200 }}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Feedback
+              </Nav.Link>
+            </OverlayTrigger>
           </Nav>
           <AddressForm />
         </Navbar.Collapse>
