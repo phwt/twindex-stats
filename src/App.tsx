@@ -15,8 +15,10 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
-      setTwinPrice(await getTwinPrice());
-      setDopplePrice(await getDopplePrice());
+      setInterval(async () => {
+        setTwinPrice(await getTwinPrice());
+        setDopplePrice(await getDopplePrice());
+      }, 5000);
     })();
   }, []);
 
