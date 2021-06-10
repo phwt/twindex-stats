@@ -89,7 +89,7 @@ const Countdown = () => {
     <Card className="h-100">
       <Card.Body>
         <Row className="h-100 d-flex align-items-center">
-          <Col md={12} lg={4} className="text-center">
+          <Col md={12} lg={3} className="text-center">
             <h4 className="m-0">
               <TextTransition inline text={locked.amount} />
             </h4>
@@ -99,7 +99,7 @@ const Countdown = () => {
             <br />
             <small>TWIN Locked</small>
           </Col>
-          <Col md={12} lg={8} className="text-center">
+          <Col md={12} lg={9} className="text-center">
             <hr className="d-lg-none d-md-block" />
             <small className="d-block text-muted mb-1">
               Approximately {unlockDateString}
