@@ -8,14 +8,19 @@ import { useWallet } from "../../../modules/contexts/WalletContext";
 const LPSection = () => {
   const [LPs, setLPs] = useState<LPPrice[]>([]);
   const [totalLP, setTotalLP] = useState<any>({});
+  const [noStaked, setNoStaked] = useState(false);
   const { address } = useWallet();
 
   useEffect(() => {
     (async () => {
       if (address) {
         const lps = await getLPs(address);
-        setLPs(lps.lps);
-        setTotalLP(lps.total);
+        if (lps === null) {
+          setNoStaked(true);
+        } else {
+          setLPs(lps.lps);
+          setTotalLP(lps.total);
+        }
       }
     })();
   }, [address]);
@@ -47,17 +52,25 @@ const LPSection = () => {
 
         {address !== "" ? (
           <>
-            {!LPs.length && (
+            {!LPs.length && !noStaked && (
               <div className="text-center w-100 mt-5 mb-4">
                 <Spinner animation="border" />
               </div>
             )}
 
-            {LPs.map((lp, index) => {
-              return <LPCard key={index} lp={lp} />;
-            })}
+            {noStaked ? (
+              <div className="text-center text-muted w-100 pt-5 my-5">
+                No Staked Liquidity Pool Found
+              </div>
+            ) : (
+              <>
+                {LPs.map((lp, index) => {
+                  return <LPCard key={index} lp={lp} />;
+                })}
 
-            {!!LPs.length && <LPTotalCard lp={totalLP} />}
+                {!!LPs.length && <LPTotalCard lp={totalLP} />}
+              </>
+            )}
           </>
         ) : (
           <div className="text-center text-muted w-100 mt-5 mb-4">
