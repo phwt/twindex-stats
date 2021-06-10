@@ -9,12 +9,21 @@ import PriceCard from "./components/display/PriceCard";
 import StockTable from "./components/display/stock/StockSection";
 import { getDopplePrice, getTwinPrice } from "./modules/ethers/GovernanceToken";
 import PriceTitle from "./components/common/PriceTitle";
+import firebase from "firebase/app";
+import "firebase/analytics";
+import firebaseConfig from "./firebaseConfig.json";
+
+const initializeFirebase = () => {
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+};
 
 const App = () => {
   const [twinPrice, setTwinPrice] = useState("");
   const [dopplePrice, setDopplePrice] = useState("");
 
   useEffect(() => {
+    initializeFirebase();
     (async () => {
       setTwinPrice(await getTwinPrice());
       setDopplePrice(await getDopplePrice());
