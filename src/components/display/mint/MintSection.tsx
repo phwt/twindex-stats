@@ -7,11 +7,19 @@ import { useWallet } from "../../../modules/contexts/WalletContext";
 
 const MintSection = () => {
   const [positions, setPositions] = useState<MintPosition[]>([]);
+  const [noMinted, setNoMinted] = useState(false);
   const { address } = useWallet();
 
   useEffect(() => {
     (async () => {
-      if (address) setPositions(await getMintPositions(address));
+      if (address) {
+        const mintPositions = await getMintPositions(address);
+        if (mintPositions === null) {
+          setNoMinted(true);
+        } else {
+          setPositions(mintPositions);
+        }
+      }
     })();
   }, [address]);
 
@@ -54,9 +62,15 @@ const MintSection = () => {
 
         {address !== "" ? (
           <>
-            {!positions.length && (
+            {!positions.length && !noMinted && (
               <div className="text-center w-100 mt-5 mb-4">
                 <Spinner animation="border" />
+              </div>
+            )}
+
+            {noMinted && (
+              <div className="text-center text-muted w-100 mt-5 mb-4">
+                No Minted Positions Found
               </div>
             )}
 
