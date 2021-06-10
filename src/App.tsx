@@ -11,11 +11,13 @@ import { getDopplePrice, getTwinPrice } from "./modules/ethers/GovernanceToken";
 import PriceTitle from "./components/common/PriceTitle";
 import firebase from "firebase/app";
 import "firebase/analytics";
+import "firebase/performance";
 import firebaseConfig from "./firebaseConfig.json";
 
 const initializeFirebase = () => {
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
+  firebase.performance();
 };
 
 const App = () => {
