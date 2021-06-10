@@ -7,7 +7,7 @@ interface Props {
 
 const PriceTitle = ({ twinPrice, dopPrice }: Props) => {
   return (
-    <Helmet>
+    <Helmet defer={false}>
       <title>
         TWIN {twinPrice} | DOP {dopPrice} - TWINDEX Stats
       </title>
