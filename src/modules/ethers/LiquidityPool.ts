@@ -198,7 +198,7 @@ const getDopLPs = async (address: string): Promise<LPPrice[]> => {
           unclaimedTwin: new Intl.NumberFormat().format(
             parseFloat(Number(ethers.utils.formatEther(pendingTwin)).toFixed(2))
           ),
-          unclaimedTwinValue,
+          unclaimedTwinValue: formatUsd(unclaimedTwinValue),
         };
       } else {
         return undefined;
