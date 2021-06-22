@@ -213,10 +213,54 @@ const getDopLPs = async (address: string): Promise<LPPrice[]> => {
   return LPs.filter((pair) => pair !== undefined) as LPPrice[];
 };
 
+const getTwinLP = async (address: string): Promise<LPPrice | undefined> => {
+  const fairLaunch = new ethers.Contract(
+    FAIRLAUNCH.address,
+    FAIRLAUNCH.abi,
+    provider
+  );
+  const dollyPrice = await getOracleDollyPrice();
+  const twinPrice = await getTokenPriceWithDopPair(TOKENS.TWIN, dollyPrice);
+
+  const twinAmount = (await fairLaunch.userInfo(9, address)).amount;
+  const lpValue = twinAmount.mul(twinPrice).div(ethers.utils.parseEther("1"));
+
+  const pendingTwin = await getPendingTwin("9", address);
+  const pendingTwinValue = pendingTwin
+    .mul(twinPrice)
+    .div(ethers.utils.parseEther("1"));
+
+  if (twinAmount.gt(0)) {
+    return {
+      token0Symbol: "TWIN",
+      token1Symbol: "",
+      token0Amount: new Intl.NumberFormat().format(
+        parseFloat(Number(ethers.utils.formatEther(twinAmount)).toFixed(4))
+      ),
+      token1Amount: "",
+      lpAmount: new Intl.NumberFormat().format(
+        parseFloat(Number(ethers.utils.formatEther(twinAmount)).toFixed(2))
+      ),
+      lpValue: formatUsd(lpValue),
+      unformattedLpValue: lpValue,
+      pendingTwin,
+      unclaimedTwin: new Intl.NumberFormat().format(
+        parseFloat(Number(ethers.utils.formatEther(pendingTwin)).toFixed(2))
+      ),
+      unclaimedTwinValue: formatUsd(pendingTwinValue),
+    };
+  } else {
+    return undefined;
+  }
+};
+
 export const getLPs = async (address: string) => {
   const dollyLPs = await getDollyLPs(address);
   const dopLPs = await getDopLPs(address);
+  const twinLP = await getTwinLP(address);
+
   const combineLPs = [...dollyLPs, ...dopLPs];
+  if (twinLP) combineLPs.push(twinLP);
 
   if (!combineLPs.length) {
     return null;
