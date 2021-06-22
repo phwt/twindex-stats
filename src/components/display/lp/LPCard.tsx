@@ -11,6 +11,11 @@ const LPCard = ({ lp }: Props) => {
     return `/twindex-stats/image/pool/${lp.token1Symbol}-${lp.token0Symbol}.svg`;
   }, [lp.token0Symbol, lp.token1Symbol]);
 
+  const poolName = useMemo(() => {
+    if (lp.token1Symbol === "") return `${lp.token0Symbol} LP`;
+    else return `${lp.token1Symbol}-${lp.token0Symbol} LP`;
+  }, [lp]);
+
   return (
     <Card
       style={{
@@ -30,9 +35,13 @@ const LPCard = ({ lp }: Props) => {
                   fontWeight: 300,
                 }}
               >
-                {lp.token1Symbol}-{lp.token0Symbol} LP <br />
+                {poolName}
+                <br />
                 <small className="text-primary">
-                  {lp.lpAmount}&nbsp;<span style={{ fontWeight: 200 }}>LP</span>
+                  {lp.lpAmount}&nbsp;
+                  <span style={{ fontWeight: 200 }}>
+                    {lp.token1Symbol === "" ? lp.token0Symbol : "LP"}
+                  </span>
                 </small>
               </div>
             </div>
