@@ -122,6 +122,10 @@ const getDollyLPs = async (address: string): Promise<LPPrice[]> => {
   return LPs.filter((pair) => pair !== undefined) as LPPrice[];
 };
 
+/**
+ * @deprecated Twindex has deprecated DOP-Synthetic Assets LP
+ * This method will be removed when the deprecated LPs has been completely removed from twindex.com
+ */
 const getDopLPs = async (address: string): Promise<LPPrice[]> => {
   const LPs = await Promise.all(
     Object.entries(DOP_PAIRS).map(async ([token, pairAddress]) => {
