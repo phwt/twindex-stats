@@ -57,6 +57,8 @@ const MintSection = () => {
           </Col>
           <Col className="text-left text-lg-right pt-1" xs={12} lg={6}>
             <Form.Check
+              id="hideSmall"
+              custom
               label="Hide Small Assets"
               checked={hideSmall}
               onChange={({ target: { checked } }) => {
