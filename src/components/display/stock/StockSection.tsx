@@ -16,7 +16,7 @@ const StockTable = () => {
 
   useEffect(() => {
     // Faster refresh rate on trading hours
-    const interval = isTradingHours ? 5000 : 30000;
+    const interval = isTradingHours ? 30000 : 120000;
     (async () => {
       setPrices(await loadStocksPrice());
       setInterval(async () => {

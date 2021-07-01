@@ -39,7 +39,7 @@ const App = () => {
       setInterval(async () => {
         setTwinPrice(await getTwinPrice());
         setDopplePrice(await getDopplePrice());
-      }, 5000);
+      }, 30000);
     })();
   }, []);
 
