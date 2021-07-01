@@ -37,16 +37,19 @@ const secondsUntilBlock = (
   targetBlockNumber: number
 ) => {
   const BLOCK_TIME = 3 * 1000; // 3 second
-  const diff = Math.abs(currentBlockNumber - targetBlockNumber);
+  const diff = currentBlockNumber - targetBlockNumber;
 
-  return diff * BLOCK_TIME;
+  return -(diff * BLOCK_TIME);
 };
 
 export const getUnlockDate = async () => {
   const currentBlockNumber = await getCurrentBlockNumber();
   const TWIN_UNLOCK_BLOCK_NUMBER = 8763010;
-  return (
-    new Date().valueOf() +
-    secondsUntilBlock(currentBlockNumber, TWIN_UNLOCK_BLOCK_NUMBER)
+
+  const secondsUntil = secondsUntilBlock(
+    currentBlockNumber,
+    TWIN_UNLOCK_BLOCK_NUMBER
   );
+
+  return new Date().valueOf() + secondsUntil;
 };
