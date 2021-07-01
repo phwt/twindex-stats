@@ -8,6 +8,7 @@ import {
 
 const TWIN_ABI = [
   "function lockOf(address) external view returns (uint256 lockedAmount)",
+  "function canUnlockAmount(address) public view returns (uint256 canUnlockAmount)",
 ];
 
 export const getLockedTWINAmount = async (address: string) => {
@@ -18,6 +19,24 @@ export const getLockedTWINAmount = async (address: string) => {
   const dollyPrice = await getOracleDollyPrice();
   const twinPrice = await getTokenPriceWithDopPair(TOKENS.TWIN, dollyPrice);
   const valueInUsd = lockedAmount
+    .mul(twinPrice)
+    .div(ethers.utils.parseEther("1"));
+
+  return {
+    amount,
+    valueInUsd: formatUsd(valueInUsd),
+  };
+};
+
+export const getCanUnlockTWINAmount = async (address: string) => {
+  const twin = new ethers.Contract(TOKENS.TWIN, TWIN_ABI, provider);
+  const canUnlockAmount = (await twin.functions.canUnlockAmount(address))
+    .canUnlockAmount;
+
+  const amount = Number(ethers.utils.formatEther(canUnlockAmount)).toFixed(2);
+  const dollyPrice = await getOracleDollyPrice();
+  const twinPrice = await getTokenPriceWithDopPair(TOKENS.TWIN, dollyPrice);
+  const valueInUsd = canUnlockAmount
     .mul(twinPrice)
     .div(ethers.utils.parseEther("1"));
 
