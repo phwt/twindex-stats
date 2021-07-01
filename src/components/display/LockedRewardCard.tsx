@@ -8,7 +8,7 @@ import IconTooltip from "../common/IconTooltip";
 import { useWallet } from "../../modules/contexts/WalletContext";
 import TextTransition from "react-text-transition";
 
-const Countdown = () => {
+const LockedRewardCard = () => {
   const [locked, setLocked] = useState<{
     amount: string;
     valueInUsd: string;
@@ -89,4 +89,4 @@ const Countdown = () => {
   );
 };
 
-export default Countdown;
+export default LockedRewardCard;
