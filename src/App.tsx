@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Countdown from "./components/display/Countdown";
+import Countdown from "./components/display/LockedRewardCard";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
 import LPTable from "./components/display/lp/LPSection";
@@ -39,7 +39,7 @@ const App = () => {
       setInterval(async () => {
         setTwinPrice(await getTwinPrice());
         setDopplePrice(await getDopplePrice());
-      }, 5000);
+      }, 30000);
     })();
   }, []);
 
