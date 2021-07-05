@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { DFI_PROTOCOLS, provider, TOKENS } from "./EthersProvider";
 import { objectFlip } from "./Utils";
+import { STOCK_TOKENS } from "./Stock";
 
 const getUserLoans = async (address: string) => {
   let loans = [];
@@ -57,7 +58,7 @@ export const getMintPositions = async (
 
       if (collateral.lt(COLLATERAL_THRESHOLD)) return undefined;
 
-      const loanTokenSymbol = objectFlip(TOKENS)[loanToken];
+      const loanTokenSymbol = objectFlip(STOCK_TOKENS)[loanToken];
       const collateralTokenSymbol = objectFlip(TOKENS)[collateralToken];
 
       let margin = currentMargin.sub(maintenanceMargin);

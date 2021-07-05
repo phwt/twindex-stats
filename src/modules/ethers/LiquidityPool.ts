@@ -8,6 +8,7 @@ import {
 import { ethers } from "ethers";
 import { FAIRLAUNCH_ABI, IUNISWAPV2_PAIR_ABI } from "./ABI";
 import { provider, TOKENS } from "./EthersProvider";
+import { STOCK_TOKENS } from "./Stock";
 
 const DOLLY_PAIRS = {
   TSLA: "0xbde3b88c4D5926d5236447D1b12a866f1a38B2B7",
@@ -71,7 +72,7 @@ const getDollyLPs = async (address: string): Promise<LPPrice[]> => {
     Object.entries(DOLLY_PAIRS).map(async ([token, pairAddress]) => {
       const dollyPrice = await getOracleDollyPrice();
       const stockPrice = await getTokenPriceWithDollyPair(
-        TOKENS[token],
+        STOCK_TOKENS[token],
         dollyPrice
       );
       const [totalStockReserve, totalDollyReserve] = await getReserves(
@@ -148,7 +149,7 @@ const getDopLPs = async (address: string): Promise<LPPrice[]> => {
         tokenPrice = await getTokenPriceWithDopPair(TOKENS.TWIN, dollyPrice);
       } else {
         tokenPrice = await getTokenPriceWithDollyPair(
-          TOKENS[token],
+          STOCK_TOKENS[token],
           dollyPrice
         );
       }
@@ -156,7 +157,7 @@ const getDopLPs = async (address: string): Promise<LPPrice[]> => {
       const [token0] = await getTokenAddressesFromPair(pairAddress);
 
       let totalStockReserve, totalDopReserve, lpPrice;
-      if (TOKENS[token] === token0) {
+      if (STOCK_TOKENS[token] === token0) {
         [totalStockReserve, totalDopReserve] = await getReserves(pairAddress);
         lpPrice = getLpPrice(
           totalSupply,

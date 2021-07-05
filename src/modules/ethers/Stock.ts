@@ -6,6 +6,19 @@ import {
   getTokenPriceWithDollyPair,
 } from "./Utils";
 
+export const STOCK_TOKENS: {
+  [key: string]: string;
+} = {
+  TSLA: "0x17aCe02e5C8814BF2EE9eAAFF7902D52c15Fb0f4",
+  GOOGL: "0x9C169647471C1C6a72773CfFc50F6Ba285684803",
+  AMZN: "0x1085B90544ff5C421D528aAF79Cc65aFc920aC79",
+  AAPL: "0xC10b2Ce6A2BCfdFDC8100Ba1602C1689997299D3",
+  COIN: "0xB23DC438b40cDb8a625Dc4f249734811F7DA9f9E",
+  BIDU: "0x48D2854529183e1de3D36e29D437f8F6043AcE17",
+  SPCE: "0x75bD0500548B49455D2Dfd86fa30Fba476Cb3895",
+  SPY: "0xf2018b59f8f9be020c12cb0a2624200d9fba2af1",
+};
+
 export interface StockPrice {
   token: string;
   stockPrice: string;
@@ -15,26 +28,20 @@ export interface StockPrice {
 
 export const loadStocksPrice = async (): Promise<StockPrice[]> => {
   return await Promise.all(
-    Object.entries(TOKENS)
-      .filter(([token, address]) => {
-        return token !== "DOLLY" && token !== "DOP" && token !== "TWIN";
-      })
-      .map(async ([token, address]) => {
-        const dollyPrice = await getOracleDollyPrice();
-        const stockPrice = await getTokenPriceWithDollyPair(
-          address,
-          dollyPrice
-        );
-        const oracleStockPrice = await getOracleStockPrice(address, dollyPrice);
-        const diff = getDiff(stockPrice, oracleStockPrice);
+    Object.entries(STOCK_TOKENS)
+    .map(async ([token, address]) => {
+      const dollyPrice = await getOracleDollyPrice();
+      const stockPrice = await getTokenPriceWithDollyPair(address, dollyPrice);
+      const oracleStockPrice = await getOracleStockPrice(address, dollyPrice);
+      const diff = getDiff(stockPrice, oracleStockPrice);
 
-        return {
-          token,
-          stockPrice: formatUsd(stockPrice),
-          oraclePrice: formatUsd(oracleStockPrice),
-          diff: Number(ethers.utils.formatEther(diff)).toFixed(2) + "%",
-        };
-      })
+      return {
+        token,
+        stockPrice: formatUsd(stockPrice),
+        oraclePrice: formatUsd(oracleStockPrice),
+        diff: Number(ethers.utils.formatEther(diff)).toFixed(2) + "%",
+      };
+    })
   );
 };
 
