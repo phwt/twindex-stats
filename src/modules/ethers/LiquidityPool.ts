@@ -14,6 +14,10 @@ const DOLLY_PAIRS = {
   GOOGL: "0xC38150a12D3C686f13D6e3A791d6301ed274B862",
   AMZN: "0x15C53425bd0b9bfEd3d4cCf27F4c4f1f7bBC838B",
   AAPL: "0xb91d34BCdF77E13f70AfF4d86129d13389dE0802",
+  COIN: "0x13F65fA2E9c9532125b752ED7A57Da87B4Dd4279",
+  BIDU: "0x65e79848699E9ef894C440206946087d31f6575C",
+  SPCE: "0xb07fC35D2318bF8FF31A3FdDF1e758e3450D98e2",
+  SPY: "0x5d704aA3f49c57f0Da3b1db97114763cBD679333",
 };
 
 const DOP_PAIRS = {
@@ -26,14 +30,22 @@ const DOP_PAIRS = {
 
 const TWINDEX_POOLS = {
   TWIN_DOP: 0,
+  TWIN_DOLLY: 10,
+  TWIN_WBNB: 11,
+
   TSLA_DOP: 1,
   DOP_AAPL: 2,
   AMZN_DOP: 3,
+  DOP_GOOGL: 8,
+
   TSLA_DOLLY: 4,
   AMZN_DOLLY: 5,
   AAPL_DOLLY: 6,
   GOOGL_DOLLY: 7,
-  DOP_GOOGL: 8,
+  COIN_DOLLY: 12,
+  BIDU_DOLLY: 13,
+  SPCE_DOLLY: 14,
+  SPY_DOLLY: 15,
 };
 
 const FAIRLAUNCH = {
@@ -133,7 +145,7 @@ const getDopLPs = async (address: string): Promise<LPPrice[]> => {
       const dopPrice = await getTokenPriceWithDollyPair(TOKENS.DOP, dollyPrice);
       let tokenPrice;
       if (token === "TWIN") {
-        tokenPrice = await getTokenPriceWithDopPair(TOKENS[token], dollyPrice);
+        tokenPrice = await getTokenPriceWithDopPair(TOKENS.TWIN, dollyPrice);
       } else {
         tokenPrice = await getTokenPriceWithDollyPair(
           TOKENS[token],
